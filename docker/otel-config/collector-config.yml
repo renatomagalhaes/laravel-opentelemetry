@@ -1,0 +1,22 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+      grpc:
+
+exporters:
+  jaeger:
+    endpoint: "http://jaeger:14250"
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+  logging:
+    loglevel: debug
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [jaeger, logging]
+    metrics:
+      receivers: [otlp]
+      exporters: [prometheus, logging]
